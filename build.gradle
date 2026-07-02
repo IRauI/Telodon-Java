@@ -1,0 +1,38 @@
+
+plugins{
+    id 'java'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group 'tasks'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    modules = [ 'javafx.controls' , 'javafx.fxml']
+    //de modificat in functie de versiunea JDK locala
+    version="21"
+}
+
+
+dependencies {
+
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    implementation 'org.apache.logging.log4j:log4j-api:2.23.0'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    implementation 'org.apache.logging.log4j:log4j-core:2.23.0'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    runtimeOnly group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
+    runtimeOnly 'org.xerial:sqlite-jdbc:3.43.2.2'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+
+    implementation 'org.slf4j:slf4j-nop:2.0.9'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.11'
+}
