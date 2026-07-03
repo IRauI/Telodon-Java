@@ -76,7 +76,21 @@ public class DonatorJdbcRepository implements IRepository<Integer, Donator> {
 
     @Override
     public void update(Integer integer, Donator entity) {
-
+        logger.traceEntry("updating donator {} ", entity);
+        Connection con = dbUtils.getConnection();
+        try (PreparedStatement preStmt = con.prepareStatement(
+                "update donator set nume=?, prenume=?, adresa=?, telefon=? where id=?")) {
+            preStmt.setString(1, entity.getNume());
+            preStmt.setString(2, entity.getPrenume());
+            preStmt.setString(3, entity.getAdresa());
+            preStmt.setString(4, entity.getTelefon());
+            preStmt.setInt(5, integer);
+            int result = preStmt.executeUpdate();
+        } catch (SQLException ex) {
+            logger.error(ex);
+            System.out.println("Error DB " + ex);
+        }
+        logger.traceExit();
     }
 
     @Override

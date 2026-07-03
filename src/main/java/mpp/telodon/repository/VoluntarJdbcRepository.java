@@ -73,7 +73,19 @@ public class VoluntarJdbcRepository implements IRepository<Integer, Voluntar>{
 
     @Override
     public void update(Integer integer, Voluntar entity) {
-
+        logger.traceEntry("updating voluntar {} ", entity);
+        Connection con = dbUtils.getConnection();
+        try (PreparedStatement preStmt = con.prepareStatement(
+                "update voluntar set username=?, password=? where id=?")) {
+            preStmt.setString(1, entity.getUsername());
+            preStmt.setString(2, entity.getPassword());
+            preStmt.setInt(3, integer);
+            int result = preStmt.executeUpdate();
+        } catch (SQLException ex) {
+            logger.error(ex);
+            System.out.println("Error DB " + ex);
+        }
+        logger.traceExit();
     }
 
     @Override

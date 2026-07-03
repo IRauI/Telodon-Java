@@ -73,7 +73,19 @@ public class CaritabilJdbcRepository implements IRepository<Integer, Caritabil> 
 
     @Override
     public void update(Integer integer, Caritabil entity) {
-
+        logger.traceEntry("updating caritabil {} ", entity);
+        Connection con = dbUtils.getConnection();
+        try (PreparedStatement preStmt = con.prepareStatement(
+                "update caritabil set total=?, denumire=? where id=?")) {
+            preStmt.setDouble(1, entity.getTotal());
+            preStmt.setString(2, entity.getDenumire());
+            preStmt.setInt(3, integer);
+            int result = preStmt.executeUpdate();
+        } catch (SQLException ex) {
+            logger.error(ex);
+            System.out.println("Error DB " + ex);
+        }
+        logger.traceExit();
     }
 
     @Override
