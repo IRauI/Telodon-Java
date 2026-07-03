@@ -8,6 +8,8 @@ import mpp.telodon.model.Voluntar;
 import mpp.telodon.service.ServiceException;
 import mpp.telodon.service.VoluntarService;
 
+import java.util.function.Consumer;
+
 
 public class LoginController {
     @FXML
@@ -19,6 +21,8 @@ public class LoginController {
     @FXML
     private Label errorLabel;
 
+    private Consumer<Voluntar> onLoginSuccess;
+
     private VoluntarService service;
 
     public VoluntarService getService() {
@@ -29,11 +33,16 @@ public class LoginController {
         this.service = service;
     }
 
+    public void setOnLoginSuccess(Consumer<Voluntar> onLoginSuccess) {
+        this.onLoginSuccess = onLoginSuccess;
+    }
+
     @FXML
     public void handleLogin(){
         try{
             Voluntar v = service.login(username.getText(),password.getText());
             errorLabel.setText("");
+            onLoginSuccess.accept(v);
         } catch (ServiceException e) {
             errorLabel.setText(e.getMessage());
         }
