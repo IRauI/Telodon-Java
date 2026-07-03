@@ -1,5 +1,6 @@
 
 plugins{
+    id 'application'
     id 'java'
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
@@ -7,6 +8,9 @@ plugins{
 group 'tasks'
 version '1.0-SNAPSHOT'
 
+application {
+    mainClass = 'mpp.telodon.Main'
+}
 
 repositories {
     mavenCentral()
